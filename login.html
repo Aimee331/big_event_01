@@ -16,17 +16,84 @@
             <img src="/assets/images/logo.png" alt="">
         </div>
         <!-- 登录板块 -->
-        <div class="loginbox">
+        <div class="loginAndRegBox">
             <div class="title"></div>
             <!-- 登录的表单 -->
-            <div class="login-form"></div>
+            <div class="login-box">
+                <!-- class="layui-form"是用于后面的表单校验 -->
+                <form class="layui-form" id="form_login">
+                    <!-- 用户 -->
+                    <div class="layui-form-item">
+                        <i class="layui-icon layui-icon-username"></i>
+                        <input type="text" name="username" required lay-verify="required" placeholder="请输入用户名"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                    <!-- 密码 -->
+                    <div class="layui-form-item">
+                        <i class="layui-icon layui-icon-password"></i>
+                        <input type="text" name="password" required lay-verify="required|pwd" placeholder="请输入密码"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                    <!-- 提交按钮 -->
+                    <div class="layui-form-item">
+                        <!-- lay-submit是用于后面的表单校验 -->
+                        <!-- 表单里面的button按钮就有默认提交事件,不能写type=button -->
+                        <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit
+                            lay-filter="formDemo">登录</button>
+                    </div>
+                    <!-- a链接 -->
+                    <div class="layui-form-item links">
+                        <a href="javascript:;" id="link_reg">去注册账号</a>
+                    </div>
+                </form>
+            </div>
             <!-- 注册的表单 -->
-            <div class="reg-form"></div>
+            <div class="reg-box" style="display: none;">
+                <!-- class="layui-form"是用于后面的表单校验 -->
+                <form class="layui-form" id="form_reg">
+                    <!-- 用户 -->
+                    <div class="layui-form-item">
+                        <i class="layui-icon layui-icon-username"></i>
+                        <input type="text" name="username" required lay-verify="required" placeholder="请输入用户名"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                    <!-- 密码 -->
+                    <div class="layui-form-item">
+                        <i class="layui-icon layui-icon-password"></i>
+                        <input type="text" name="password" required lay-verify="required|pwd" placeholder="请输入密码"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                    <!-- 重复密码 -->
+                    <div class="layui-form-item">
+                        <i class="layui-icon layui-icon-password"></i>
+                        <!-- 修改name属性 -->
+                        <input type="text" name="repassword" required lay-verify="required|pwd|repwd" placeholder="再次确认密码"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                    <!-- 提交按钮 -->
+                    <div class="layui-form-item">
+                        <!-- lay-submit是用于后面的表单校验 -->
+                        <!-- 表单里面的button按钮就有默认提交事件,不能写type=button -->
+                        <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit
+                            lay-filter="formDemo">注册</button>
+                    </div>
+                    <!-- a链接 -->
+                    <div class="layui-form-item links">
+                        <a href="javascript:;" id="link_login">去登录</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
 
-
+    <!-- js文件一般在下面引入 -->
+    <!-- layui的js文件和jQuery没有关系,所以写到login.js前面就可以了 -->
+    <script src="/assets/lib/layui/layui.all.js"></script>
+    <script src="/assets/lib/jquery.js"></script>
+    <!-- baseAPI的引入要在jQuery下面和所有需要用到ajax方法的前面 -->
+    <script src="/assets/js/baseAPI.js"></script>
+    <script src="/assets/js/login.js"></script>
 </body>
 
 </html>
