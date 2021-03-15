@@ -36,7 +36,7 @@ $(function () {
 
     //修改用户信息
     $('form').on('submit', function (e) {
-        xx
+        e.preventDefault()
         $.ajax({
             method: 'post',
             url: '/my/userinfo',
