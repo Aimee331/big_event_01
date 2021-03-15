@@ -3,6 +3,20 @@ $(function () {
     //所有封装成函数并且定义成全局变量
     getUserInfo()
 
+    //退出登录功能
+    const layer = layui.layer
+    $('#btnLogout').on('click', function () {
+        //eg1
+        layer.confirm('是否确认退出?', { icon: 3, title: '提示' }, function (index) {
+            //do something
+            //1清空token值
+            localStorage.removeItem('token')
+            //2页面跳转
+            location.href = '/login.html'
+            //3关闭弹出框
+            layer.close(index);
+        });
+    })
 })
 
 //获取用户信息将信息渲染到页面,这个功能之后其他页面还会用到
@@ -12,9 +26,9 @@ function getUserInfo() {
         type: 'get',
         url: '/my/userinfo',
         // data: {},
-        headers: {
-            Authorization: localStorage.getItem('token') || ''
-        },
+        // headers: {
+        //     Authorization: localStorage.getItem('token') || ''
+        // },
         success: (res) => {
             console.log(res);
             if (res.status != 0) {
@@ -56,3 +70,5 @@ function renderAvatar(user) {
         //  `)
     }
 }
+
+
