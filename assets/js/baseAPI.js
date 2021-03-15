@@ -11,7 +11,7 @@ $(function () {
             }
             //登录拦截
             options.complete = function (res) {
-                console.log(res);
+                // console.log(res);
                 const obj = res.responseJSON
                 if (obj.status === 1 && obj.message === '身份认证失败！') {
                     //销毁token
