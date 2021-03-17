@@ -36,6 +36,7 @@ $(function () {
                 }
                 layui.layer.msg(res.message, { icon: 6 })
                 $(this)[0].reset()
+                window.parent.getUserInfo()
             }
         })
     })
