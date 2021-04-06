@@ -15,14 +15,15 @@ $(function () {
             return num
         }
         //显示想要的日期格式
-        return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+        // return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+        return `${y}-${m}-${d}`
     }
 
     //定义一个对象来放参数
     let q = {
-        pagenum: 1,   //页码值
-        pagesize: 2,    //每页显示多少数据
-        cate_id: "",     //文章分类的 Id
+        page: 3,   //页码值
+        perpage: 3,    //每页显示多少数据
+        type: "",     //文章分类的 Id
         state: ""        //文章的状态，可选值有：已发布、草稿
     }
     //获取文章列表数据(封装成函数)
@@ -30,7 +31,7 @@ $(function () {
     function initTable() {
         $.ajax({
             method: 'get',
-            url: '/my/article/list',
+            url: '/admin/article/query',
             data: q,
             success: (res) => {
                 // console.log(res);
@@ -40,7 +41,7 @@ $(function () {
                 const htmlStr = template('tpl-table', { list: res.data })
                 $('tbody').html(htmlStr)
                 //当数据一渲染到页面就要实现分页功能
-                renderPage(res.total)
+                renderPage(res.totalCount)
             }
         })
     }
@@ -70,7 +71,7 @@ $(function () {
         e.preventDefault()
         let cate_id = $('[name="cate_id"]').val()
         let state = $('[name="state"]').val()
-        q.cate_id = cate_id
+        q.type = cate_id
         q.state = state
         initTable()
     })
@@ -82,8 +83,8 @@ $(function () {
         laypage.render({
             elem: 'pageBox',//注意，这里的 test1 是 ID，不用加 # 号
             count: total, //数据总数，从服务端得到
-            limit: q.pagesize,
-            curr: q.pagenum,
+            limit: q.perpage,
+            curr: q.page,
             limits: [2, 3, 4, 5],
             //自定义排版
             layout: ['count', 'limit', 'prev', 'page', 'next', 'skip', 'refresh'],
@@ -96,8 +97,8 @@ $(function () {
                 //首次不执行
                 if (!first) {
                     //do something
-                    q.pagenum = obj.curr
-                    q.pagesize = obj.limit
+                    q.page = obj.curr
+                    q.perpage = obj.limit
                     initTable()
                 }
             }
@@ -112,18 +113,19 @@ $(function () {
             //do something
             // console.log(Id);
             $.ajax({
-                method: 'get',
-                url: '/my/article/delete/' + Id,
+                method: 'post',
+                url: '/admin/article/delete',
+                data: { id: Id },
                 success: (res) => {
                     // console.log(res);
                     if (res.status !== 0) {
-                        return layui.layer.msg(res.message)
+                        return layui.layer.msg(res.msg)
                     }
                     layui.layer.msg('删除数据成功')
                     layer.close(index);
                     //如果当前页面只有一个元素,且当前页码大于一,删除之后要自动跳到上一页
-                    if ($('.btn-delete').length === 1 && q.pagenum > 1) {
-                        q.pagenum--;
+                    if ($('.btn-delete').length === 1 && q.page > 1) {
+                        q.page--;
                     }
                     initTable()
                 }

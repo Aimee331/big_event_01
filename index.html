@@ -94,6 +94,15 @@
     <script src="/assets/lib/jquery.js"></script>
     <script src="/assets/js/baseAPI.js"></script>
     <script src="/assets/js/index.js"></script>
+    <script>
+        //统一处理401错误
+        $(document).ajaxError(function (event, request, settings) {
+            if (request.status === 401) {
+                // alert(request.responseJSON.msg)
+                return (location.href = './login.html')
+            }
+        })
+    </script>
 </body>
 
 </html>

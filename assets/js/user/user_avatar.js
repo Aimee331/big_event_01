@@ -34,27 +34,32 @@ $(window).on('load', function () {
     //实现上传图片功能
     $('#btnUpLoad').on('click', function () {
         // return $('#file').change()
-        let dataURL = $image
+        let fd = new FormData()
+        $image
             .cropper('getCroppedCanvas', { // 创建一个 Canvas 画布
                 width: 100,
                 height: 100
             })
-            .toDataURL('image/png')       // 将 Canvas 画布上的内容，转化为 base64 格式的字符串
+            // .toDataURL('image/png')       // 将 Canvas 画布上的内容，转化为 base64 格式的字符串
+            .toBlob(function (blob) {        //将Canvas画布上的内容,转化为文件对象
+                fd.append('file_data', blob)
+                $.ajax({
+                    type: 'post',
+                    url: '/my/uploadPic',
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    success: (res) => {
+                        console.log(res);
+                        if (res.status != 0) {
+                            return layui.layer.msg(res.message, { icon: 5 })
+                        }
+                        layui.layer.msg('恭喜您,上传头像成功!', { icon: 6 })
+                        window.parent.getUserInfo()
+                    }
+                })
+            })
         // console.log(dataURL);
-        $.ajax({
-            type: 'post',
-            url: '/my/update/avatar',
-            data: { avatar: dataURL },
-            success: (res) => {
-                console.log(res);
-                if (res.status != 0) {
-                    return layui.layer.msg(res.message, { icon: 5 })
-                }
-                layui.layer.msg('恭喜您,上传头像成功!', { icon: 6 })
-                window.parent.getUserInfo()
-            }
-        })
-
     })
 
 })

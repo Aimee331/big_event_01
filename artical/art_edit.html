@@ -18,7 +18,7 @@
         <div class="layui-card-body">
             <form class="layui-form" id="form-pub" lay-filter="form-edit">
                 <!-- 隐藏域 -->
-                <input type="hidden" name="Id">
+                <input type="hidden" name="id">
                 <!-- 第01行 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">文章标题</label>
@@ -31,7 +31,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">文章类别</label>
                     <div class="layui-input-block">
-                        <select name="cate_id" lay-verify="required">
+                        <select name="categoryId" lay-verify="required">
                         </select>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
     <script type="text/html" id="tpl-cate">
                   <option value="">所有分类</option>
                   {{each data item}}
-                <option value="{{item.Id}}">{{item.name}}</option>
+                <option value="{{item.id}}">{{item.name}}</option>
                 {{/each}}
     </script>
 

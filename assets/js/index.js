@@ -45,8 +45,8 @@ function renderAvatar(user) {
     let name = user.nickname || user.username
     $('#welcome').html('欢迎&nbsp;&nbsp;' + name)
     //显示头像
-    if (user.user_pic) {
-        $('.userinfo img').attr('src', user.user_pic)
+    if (user.userPic) {
+        $('.userinfo img').attr('src', user.userPic)
         $('.text-avatar').hide()
         // $('.layui-layout-right .userinfo').html(`
         // <img src="${user.user_pic}" class="layui-nav-img">

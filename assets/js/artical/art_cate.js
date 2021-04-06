@@ -61,23 +61,25 @@ $(function () {
         indexEdit = layer.open({
             type: 1,
             area: ['500px', '250px'],
-            title: '添加文章分类',
+            title: '编辑文章分类',
             //用模板引擎创建form表单,再通过DOM元素获取
             content: $('#dialog-edit').html()
         });
         //显示对应的编辑内容(自定义属性)
         let Id = $(this).attr('data-id')
+        console.log(Id);
+        //引入layui的form对象
         let form = layui.form
         $.ajax({
             type: 'get',
-            url: '/my/article/cates/' + Id,
+            url: '/my/article/cates' + `?Id=${Id}`,
             success: (res) => {
                 console.log(res);
                 if (res.status !== 0) {
                     return layui.layer.msg(res.message)
                 }
                 //layui封装的表单赋值方法,form.val()
-                form.val('form-edit', res.data)
+                form.val('form-edit', res.data[0])
             }
         })
     })
@@ -117,7 +119,7 @@ $(function () {
             //显示对应的内容(自定义属性)
             $.ajax({
                 type: 'get',
-                url: '/my/article/deletecate/' + Id,
+                url: '/my/article/deletecate/' + `?Id=${Id}`,
                 success: (res) => {
                     console.log(res);
                     if (res.status !== 0) {

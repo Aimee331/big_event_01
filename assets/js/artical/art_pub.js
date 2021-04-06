@@ -13,7 +13,7 @@ $(function () {
                     return layui.layer.msg(res.message)
                 }
                 let htmlStr = template('tpl-cate', { data: res.data })
-                $('[name="cate_id"]').html(htmlStr)
+                $('[name="categoryId"]').html(htmlStr)
                 form.render()
             }
         })
@@ -80,7 +80,7 @@ $(function () {
             .toBlob(function (blob) {       // 将 Canvas 画布上的内容，转化为文件对象
                 // 得到文件对象后，进行后续的操作
                 //生成文件是异步,需要在回调函数里面执行
-                fd.append('cover_img', blob)
+                fd.append('cover', blob)
                 //发表文章封装成函数
                 console.log(...fd);
                 publishArtical(fd)
@@ -89,9 +89,11 @@ $(function () {
 
     //发表文章封装成函数
     function publishArtical(fd) {
+        let date = new Date()
+        fd.append('date', date)
         $.ajax({
             type: 'post',
-            url: '/my/article/add',
+            url: '/admin/article/publish',
             data: fd,
             //两个false,设cp
             contentType: false,

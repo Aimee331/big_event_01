@@ -34,7 +34,7 @@ $(function () {
         e.preventDefault()
         $.ajax({
             type: 'post',
-            url: '/api/reguser',
+            url: '/api/register',
             data: {
                 //不要用serialize方法,因为会将repassword输入框的值获取,但是这里不需要repassword输入框的值
                 username: $('.reg-box input[name="username"]').val(),

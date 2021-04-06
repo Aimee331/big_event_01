@@ -84,13 +84,13 @@
         {{each list item}}
                      <tr>
                         <td>{{item.title}}</td>
-                        <td>{{item.cate_name}}</td>
+                        <td>{{item.category}}</td>
                         <!-- 这里是将item.pub_date作为dateFormat函数的参数 -->
-                        <td>{{item.pub_date|dateFormat}}</td>
+                        <td>{{item.date|dateFormat}}</td>
                         <td>{{item.state}}</td>
                         <td>
-                            <a href="/artical/art_edit.html?id={{item.Id}}" class="layui-btn layui-btn-xs">编辑</a>
-                            <button class="layui-btn layui-btn-xs layui-btn-danger btn-delete" data-id="{{item.Id}}">删除</button>
+                            <a href="/artical/art_edit.html?id={{item.id}}" class="layui-btn layui-btn-xs">编辑</a>
+                            <button class="layui-btn layui-btn-xs layui-btn-danger btn-delete" data-id="{{item.id}}">删除</button>
                         </td>
                     </tr>
          {{/each}}

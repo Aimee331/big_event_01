@@ -6,25 +6,26 @@ $(function () {
     //split是字符串的API,可以把字符串通过分割符分割,返回一个新数组
     // console.log(location.search.split("=")[1]);
     let Id = location.search.split("=")[1]
-    console.log(Id);
+    // console.log(Id);
 
     //根据Id值获取文章详情
     function initForm() {
         $.ajax({
             method: 'get',
-            url: '/my/article/' + Id,
+            url: '/admin/article/search' + `?id=${Id}`,
             success: (res) => {
                 console.log(res);
                 if (res.status !== 0) {
                     return layer.msg(res.message)
                 }
                 form.val('form-edit', res.data)
-                tinyMCE.activeEditor.setContent(res.data.content)
-                if (!res.data.cover_img) {
+                // tinyMCE.activeEditor.setContent(res.data.content)
+                if (!res.data.cover) {
                     return layer.msg('用户未曾上传封面')
                 }
-                const baseURL = 'http://api-breakingnews-web.itheima.net'
-                let newImgURL = baseURL + res.data.cover_img;
+                // const baseURL = 'http://api-breakingnews-web.itheima.net'
+                // let newImgURL = baseURL + res.cover;
+                let newImgURL = res.data.cover
                 $image
                     .cropper('destroy')      // 销毁旧的裁剪区域
                     .attr('src', newImgURL)  // 重新设置图片路径
@@ -48,7 +49,7 @@ $(function () {
                     return layui.layer.msg(res.message)
                 }
                 let htmlStr = template('tpl-cate', { data: res.data })
-                $('[name="cate_id"]').html(htmlStr)
+                $('[name="categoryId"]').html(htmlStr)
                 form.render()
             }
         })
@@ -106,6 +107,9 @@ $(function () {
         e.preventDefault()
         let fd = new FormData(this)
         console.log(...fd);
+        let date = new Date()
+        fd.append('date', date)
+        fd.append('state', state)
         $image
             .cropper('getCroppedCanvas', { // 创建一个 Canvas 画布
                 width: 400,
@@ -114,7 +118,7 @@ $(function () {
             .toBlob(function (blob) {       // 将 Canvas 画布上的内容，转化为文件对象
                 // 得到文件对象后，进行后续的操作
                 //生成文件是异步,需要在回调函数里面执行
-                fd.append('cover_img', blob)
+                fd.append('cover', blob)
                 //发表文章封装成函数
                 publishArtical(fd)
             });
@@ -124,7 +128,7 @@ $(function () {
     function publishArtical(fd) {
         $.ajax({
             type: 'post',
-            url: '/my/article/edit',
+            url: '/admin/article/edit',
             data: fd,
             //两个false,设cp
             contentType: false,
